@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
+﻿using System.Text;
 using System.Runtime.InteropServices;
 
 namespace CriPakTools
@@ -54,7 +50,10 @@ namespace CriPakTools
                 br.BaseStream.Seek(lOffset, SeekOrigin.Begin);
 
                 if (enc == null)
-                    result = Encoding.GetEncoding("SJIS").GetString(br.ReadBytes(i));
+                {
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    result = Encoding.GetEncoding("Shift-JIS").GetString(br.ReadBytes(i));
+                }
                 else
                     result = enc.GetString(br.ReadBytes(i));
 
@@ -64,7 +63,10 @@ namespace CriPakTools
             {
                 br.BaseStream.Seek(fTemp, SeekOrigin.Begin);
                 if (enc == null)
-                    result = Encoding.GetEncoding("SJIS").GetString(br.ReadBytes(i));
+                {
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    result = Encoding.GetEncoding("Shift-JIS").GetString(br.ReadBytes(i));   
+                }
                 else
                     result = enc.GetString(br.ReadBytes(i));
 
